@@ -65,10 +65,29 @@ end
 # вывод информации о посте (Универсальный оработчик)
 
 get '/details/:post_id' do
-	post_id = params[:post_id]
-	# Код @r & @r ниже всегда выбирает одну строчку
-	results = @db.execute 'select * from Posts where id = ?', [post_id]
-	@row = results[0]
 
+	# Получаем переменную из url`a
+	post_id = params[:post_id]
+	# Получаем список постов
+	# (у нас будет только один пост)
+	results = @db.execute 'select * from Posts where id = ?', [post_id]
+
+	#выбираем этот один пост в переменную @row
+	@row = results[0]
+	# возвращаем представление details.erb
 	erb :details
 end
+
+# обработчик пост запроса /details/... 
+# (браузер отправляет данные на сервер, мы их принимаем)
+post '/details/:post_id' do
+	# Получаем переменную из url`a
+	post_id = params[:post_id]
+	# Получаем переменную из post запроса
+	content = params[:content]
+
+	erb "You typed comment #{content} for post #{post_id}"
+end
+
+
+
