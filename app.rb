@@ -66,6 +66,9 @@ end
 
 get '/details/:post_id' do
 	post_id = params[:post_id]
+	# Код @r & @r ниже всегда выбирает одну строчку
+	results = @db.execute 'select * from Posts where id = ?', [post_id]
+	@row = results[0]
 
-	erb "Displaying information for post with id #{post_id}"
+	erb :details
 end
