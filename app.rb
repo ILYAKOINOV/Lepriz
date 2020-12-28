@@ -45,6 +45,12 @@ end
 post '/new' do
 	# Получаем переменную из post запроса
 	content = params[:content]
+	# Проверка параметров
+	if content.length <= 0
+		@error = 'Введите текст'
+		return erb :new
+	end
+
 
 	erb "You typed #{content}"
 end
